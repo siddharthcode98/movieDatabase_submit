@@ -1,36 +1,37 @@
 import {Component} from 'react'
 
-import CastItem from '../CastItem'
 import Loader from 'react-loader-spinner'
 
+import CastItem from '../CastItem'
 import './index.css'
 
 class SingleMovieDetails extends Component {
   state = {movieObj: {}, loading: true, castList: []}
+
   componentDidMount() {
     this.getMovieDetails()
   }
-  MovieObjCaseConvert = item => {
-    return {
-      id: item.id,
-      runtime: item.runtime,
-      posterPath: item.poster_path,
-      OriginalTitle: item.original_title,
-      overview: item.overview,
-      voteAverage: item.vote_average,
-      releasedDate: item.released_date,
-      genre: item.genres,
-    }
-  }
-  CastObjCaseConvert = arr => {
-    return arr.map(item => ({
+
+  MovieObjCaseConvert = item => ({
+    id: item.id,
+    runtime: item.runtime,
+    posterPath: item.poster_path,
+    OriginalTitle: item.original_title,
+    overview: item.overview,
+    voteAverage: item.vote_average,
+    releasedDate: item.released_date,
+    genre: item.genres,
+  })
+
+  CastObjCaseConvert = arr =>
+    arr.map(item => ({
       id: item.id,
 
       orignialName: item.original_name,
       character: item.character,
       profilePath: item.profile_path,
     }))
-  }
+
   getMovieDetails = async () => {
     const {match} = this.props
     const {params} = match
@@ -53,17 +54,26 @@ class SingleMovieDetails extends Component {
       }))
     }
   }
+
   render() {
     const {movieObj, castList, loading} = this.state
-    console.log(castList)
-    const {posterPath, OriginalTitle, voteAverage, overview, runtime, genre} =
-      movieObj
+
+    const {
+      posterPath,
+      OriginalTitle,
+      voteAverage,
+      overview,
+      runtime,
+      genre,
+    } = movieObj
+
     const rating = Math.round(voteAverage)
+
     return (
       <>
         {loading ? (
           <section className="loader-container">
-            <Loader type="Oval" color={'green'} className="loader-style" />
+            <Loader type="Oval" color="green" className="loader-style" />
           </section>
         ) : (
           <section className="section-container-movie-details">

@@ -16,15 +16,12 @@ class Header extends Component {
   render() {
     // console.log(searchList);
     const {query} = this.state
-    console.log(query)
     return (
       <Context.Consumer>
         {value => {
           const {searchFn} = value
 
           const onClickUserInput = () => {
-            const {query} = this.state
-            console.log(query)
             this.setState({query: ''})
             searchFn(query)
           }
@@ -53,13 +50,19 @@ class Header extends Component {
                       />
                     </div>
                     <Link to="/">
-                      <button className="nav-button">Popular</button>
+                      <button className="nav-button" type="button">
+                        Popular
+                      </button>
                     </Link>
                     <Link to="/top-rated">
-                      <button className="nav-button">Top Rated</button>
+                      <button className="nav-button" type="button">
+                        Top Rated
+                      </button>
                     </Link>
                     <Link to="/upcoming">
-                      <button className="nav-button">Upcoming</button>
+                      <button className="nav-button" type="button">
+                        Upcoming
+                      </button>
                     </Link>
                   </div>
                 </nav>

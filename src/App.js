@@ -19,14 +19,14 @@ class App extends Component {
   componentDidMount() {
     this.getSearchMovies()
   }
-  caseConvert = arr => {
-    return arr.map(item => ({
+
+  caseConvert = arr =>
+    arr.map(item => ({
       id: item.id,
       posterPath: item.poster_path,
       title: item.title,
       voteAverage: item.vote_average,
     }))
-  }
 
   getSearchMovies = async () => {
     const {currentPage, search} = this.state
@@ -49,6 +49,7 @@ class App extends Component {
       this.getSearchMovies,
     )
   }
+
   turnPage = () => {
     this.setState(
       prevState => ({
@@ -58,6 +59,7 @@ class App extends Component {
       this.getPopularMovies,
     )
   }
+
   render() {
     const {search, searchList, loading, currentPage} = this.state
     // console.log(search);

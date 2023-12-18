@@ -12,14 +12,15 @@ class Popular extends Component {
   componentDidMount() {
     this.getPopularMovies()
   }
-  caseConvert = arr => {
-    return arr.map(item => ({
+
+  caseConvert = arr =>
+    arr.map(item => ({
       id: item.id,
-      poster_path: item.poster_path,
+      posterPath: item.poster_path,
       title: item.title,
-      vote_average: item.vote_average,
+      voteAverage: item.vote_average,
     }))
-  }
+
   getPopularMovies = async () => {
     const {currentPage} = this.state
     const PopularApi = `https://api.themoviedb.org/3/movie/popular?api_key=98ccf2ec8c8db509095bed7dceca517d&language=en-US&page=${currentPage}`
@@ -33,6 +34,7 @@ class Popular extends Component {
       }))
     }
   }
+
   turnPage = () => {
     this.setState(
       prevState => ({
@@ -42,25 +44,51 @@ class Popular extends Component {
       this.getPopularMovies,
     )
   }
+
+  prevPage = () => {
+    const {currentPage} = this.state
+    if (currentPage > 1) {
+      this.setState(
+        prevState => ({
+          currentPage: prevState.currentPage - 1,
+          loading: !prevState.loading,
+        }),
+        this.getPopularMovies,
+      )
+    }
+  }
+
   render() {
     const {MovieList, loading, currentPage} = this.state
-    // console.log(MovieList);
+
     return (
       <>
         {loading ? (
           <section className="loader-container">
-            <Loader type="Oval" color={'green'} className="loader-style" />
+            <Loader type="Oval" color="green" className="loader-style" />
           </section>
         ) : (
           <section className="section-container">
             <div className="popular-container ">
               <p className="route-heading">Popular Movies</p>
-              <p className="page-numbers">
-                {currentPage}
-                <button onClick={this.turnPage} className="next-page">
-                  next
+              <div className="pagination">
+                <button
+                  onClick={this.turnPage}
+                  className="next-page"
+                  type="button"
+                >
+                  Next
                 </button>
-              </p>
+                <p className="page-numbers">{currentPage}</p>
+                <button
+                  onClick={this.prevPage}
+                  className="next-page"
+                  type="button"
+                >
+                  Prev
+                </button>
+              </div>
+
               <ul className="movie-list-container">
                 {MovieList.map(item => (
                   <MovieCard key={item.id} details={item} />
